@@ -1,0 +1,42 @@
+name: Deploy Portfolio WASM to GitHub Pages
+
+on:
+  push:
+    branches: [ master ]
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup .NET 8 SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Install WASM workload
+        run: dotnet workload install wasm-tools
+
+      - name: Publish Portfolio Browser
+        run: |
+          dotnet publish Portfolio.Browser/Portfolio.Browser.csproj \
+            --configuration Release \
+            --output ./publish
+
+      - name: Prepare static site
+        run: |
+          mv publish/wwwroot/* publish/
+          cp publish/index.html publish/404.html
+          touch publish/.nojekyll
+
+      - name: Deploy to gh-pages
+        uses: JamesIves/github-pages-deploy-action@v4.5.0
+        with:
+          branch: gh-pages
+          folder: publish
+          token: ${{ secrets.GITHUB_TOKEN }}
+          single-commit: true
