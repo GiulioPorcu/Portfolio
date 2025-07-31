@@ -21,8 +21,8 @@ jobs:
         run: dotnet restore
 
       - name: Publish Blazor WASM
-        run: dotnet publish -c Release -o publish
-
+        run: dotnet publish -c Release -o publish /p:BlazorWebAssemblyEnableLinking=true /p:BasePath="/Portfolio"
+        
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
