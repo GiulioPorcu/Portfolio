@@ -22,11 +22,11 @@ jobs:
       run: dotnet publish -c Release -o publish
 
     - name: Patch base href for GitHub Pages
-      run: sed -i 's|<base href=\"/\" />|<base href=\"/Portfolio/\" />|' index.html
+      run: sed -i 's|<base href=\"/\" />|<base href=\"/Portfolio/\" />|' publish/wwwroot/index.html
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./publish
+        publish_dir: ./publish/wwwroot
         publish_branch: gh-pages
