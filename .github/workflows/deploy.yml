@@ -1,50 +1,30 @@
-name: Deploy Portfolio WASM to GitHub Pages
+name: Build and Deploy to GitHub Pages
 
 on:
   push:
-    branches: [ master ]
-  workflow_dispatch:
+    branches:
+      - master
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
-      - name: Setup .NET 8 SDK
-        uses: actions/setup-dotnet@v4
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v2
         with:
-          dotnet-version: 8.0.x
+          dotnet-version: '7.0.x'
 
-      - name: Install WASM workload
-        run: dotnet workload install wasm-tools
+      - name: Restore dependencies
+        run: dotnet restore
 
-      - name: Publish Portfolio Browser
-        run: |
-          dotnet publish Portfolio.Browser/Portfolio.Browser.csproj \
-            --configuration Release \
-            --output ./publish
+      - name: Publish Blazor WASM
+        run: dotnet publish -c Release -o publish
 
-      - name: Prepare static site
-        run: |
-          mv publish/wwwroot/* publish/
-          cp publish/index.html publish/404.html
-          touch publish/.nojekyll
-
-      - name: Ensure base href
-        run: |
-          if grep -q '<base href="/"'; then
-            sed -i 's#<base href="/"#<base href="/Portfolio/"#' publish/index.html
-          else
-            sed -i '1 s|<head>|<head>\n    <base href="/Portfolio/">|' publish/index.html
-          fi
-
-      - name: Deploy to gh-pages
-        uses: JamesIves/github-pages-deploy-action@v4.5.0
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          branch: gh-pages
-          folder: publish
-          token: ${{ secrets.GITHUB_TOKEN }}
-          single-commit: true
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./publish/wwwroot
