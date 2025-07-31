@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36310.24 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Portfolio", "Portfolio.csproj", "{D22C5090-2E42-7CF5-DFCE-2717F9F4F06F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Portfolio.Browser", "..\Portfolio.Browser\Portfolio.Browser.csproj", "{770B0370-CDAD-D10D-BD2A-97F440C2B075}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D22C5090-2E42-7CF5-DFCE-2717F9F4F06F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D22C5090-2E42-7CF5-DFCE-2717F9F4F06F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D22C5090-2E42-7CF5-DFCE-2717F9F4F06F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D22C5090-2E42-7CF5-DFCE-2717F9F4F06F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{770B0370-CDAD-D10D-BD2A-97F440C2B075}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{770B0370-CDAD-D10D-BD2A-97F440C2B075}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{770B0370-CDAD-D10D-BD2A-97F440C2B075}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{770B0370-CDAD-D10D-BD2A-97F440C2B075}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4C222A65-CE5E-48B7-B54E-83E8DBEC8081}
+	EndGlobalSection
+EndGlobal
