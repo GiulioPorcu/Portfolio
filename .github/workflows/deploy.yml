@@ -1,4 +1,4 @@
-name: Build and Deploy to GitHub Pages
+name: Deploy Blazor WebAssembly to GitHub Pages
 
 on:
   push:
@@ -8,24 +8,25 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+    - name: Checkout repository
+      uses: actions/checkout@v3
 
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: '8.0.x'
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '8.0.x'
 
-      - name: Restore dependencies
-        run: dotnet restore
+    - name: Publish Blazor WebAssembly
+      run: dotnet publish -c Release -o publish
 
-      - name: Publish Blazor WASM
-        run: dotnet publish -c Release -o publish /p:BlazorWebAssemblyEnableLinking=true /p:BasePath="/Portfolio"
-        
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./publish/wwwroot
-          publish_branch: gh-pages
+    - name: Patch base href for GitHub Pages
+      run: sed -i 's|<base href=\"/\" />|<base href=\"/Portfolio/\" />|' publish/index.html
+
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./publish
+        publish_branch: gh-pages
