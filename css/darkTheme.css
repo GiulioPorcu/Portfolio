@@ -1,0 +1,7 @@
+﻿html [data-theme='dark'] page {
+    background: black;
+}
+
+html[data-theme='dark'] a, .btn-link {
+    color: #0071c1;
+}
