@@ -1,7 +1,8 @@
-﻿html [data-theme='light'] page {
-    background: white;
+﻿html[theme='light'] a, .btn-link {
+    color: #fff;
 }
 
-html[data-theme='light'] a, .btn-link {
-    color: #ff71c1;
+html[theme='light'] .page {
+    background-color: #fff;
+    background-image: radial-gradient(#ddd 1px, transparent 1px);
 }

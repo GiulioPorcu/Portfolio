@@ -1,27 +1,48 @@
-﻿const dataThemeAttribute = 'data-theme';
-
+﻿const themeAttribute = 'theme';
 const darkTheme = 'dark';
 const lightTheme = 'light';
+const html = document.documentElement;
 
 /**
- * Toggles the system theme by changing the value of the data-theme attribute.
+ * Toggles the theme by changing the value of the theme attribute.
  */
 window.toggleTheme = () => {
-    const html = document.documentElement;
-    const current = html.getAttribute(dataThemeAttribute);
-    const next = current === darkTheme ? lightTheme : darkTheme;
-
-    html.setAttribute(dataThemeAttribute, next);
-    localStorage.setItem(dataThemeAttribute, next);
+    const other = getCurrentTheme() === darkTheme ? lightTheme : darkTheme;
+    html.setAttribute(themeAttribute, other);
+    setCurrentTheme(other);
 };
 
 /**
- * Applies the data-theme attribute, if present.
+ * Applies the theme attribute from local storage, if present.
  */
-window.applyTheme = () => {
-    const stored = localStorage.getItem(dataThemeAttribute);
+window.applyStoredTheme = () => {
+    const stored = getCurrentTheme();
 
     if (stored) {
-        document.documentElement.setAttribute(dataThemeAttribute, stored);
+        html.setAttribute(themeAttribute, stored);
+    } else {
+        setCurrentTheme(lightTheme);
+        applyStoredTheme();
     }
 };
+
+/**
+ * Stores the provided theme to local storage.
+ */
+window.setCurrentTheme = (theme) => {
+    return localStorage.setItem(themeAttribute, theme);
+}
+
+/**
+ * Gets the current theme from local storage.
+ */
+window.getCurrentTheme = () => {
+    return localStorage.getItem(themeAttribute);
+}
+
+/**
+ * Shorthand to check if the current theme is dark.
+ */
+window.isDarkTheme = () => {
+    return getCurrentTheme() === darkTheme;
+}
